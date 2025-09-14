@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FoodOrderApp</string>
+    <string name="flavorful_spicy_tango">Flavorful Spicy Tango</string>
+    <string name="login">Login</string>
+</resources>
