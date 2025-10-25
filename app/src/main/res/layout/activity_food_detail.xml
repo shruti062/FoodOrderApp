@@ -37,7 +37,7 @@
         android:layout_marginTop="8dp" />
 
     <Button
-        android:id="@+id/btnAddToCartDetail"
+        android:id="@+id/btnAddToCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add to Cart"

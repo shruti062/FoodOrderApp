@@ -1,35 +1,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="8dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/order_item_bg"
+    android:layout_marginBottom="8dp">
 
     <ImageView
-        android:id="@+id/foodImage"
+        android:id="@+id/foodImg"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:scaleType="centerCrop" />
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_food" />
 
     <TextView
         android:id="@+id/foodName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Food Name"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:paddingTop="4dp" />
+        android:layout_marginTop="8dp" />
 
     <TextView
-        android:id="@+id/foodPrice"
+        android:id="@+id/foodDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:paddingTop="2dp" />
+        android:text="Description"
+        android:layout_marginTop="4dp" />
 
-    <Button
-        android:id="@+id/btnAddToCart"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add to Cart"
-        android:paddingTop="4dp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="6dp">
 
+        <TextView
+            android:id="@+id/foodPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₹0.00"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnAddToCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:layout_marginLeft="12dp" />
+    </LinearLayout>
 </LinearLayout>

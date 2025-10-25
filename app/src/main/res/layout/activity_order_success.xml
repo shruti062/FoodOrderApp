@@ -1,22 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="20dp">
+    android:padding="24dp"
+    android:background="#FFFFFF">
+
+    <!-- ✅ Success Icon -->
+    <ImageView
+        android:id="@+id/imgSuccess"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_check_circle"
+        android:contentDescription="Success"
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:id="@+id/txtOrderMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order placed!"
+        android:text="Order placed successfully!"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginBottom="20dp" />
+        android:gravity="center"
+        android:textColor="#333333"
+        android:layout_marginBottom="30dp" />
+
+    <Button
+        android:id="@+id/btnTrackOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Track Order"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/teal"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
 
     <Button
         android:id="@+id/btnBackHome"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back to Home" />
+        android:text="Back to Home"
+        android:background="@android:color/transparent"
+        android:textColor="#009688"
+        android:textStyle="bold"
+        android:padding="6dp" />
+
 </LinearLayout>

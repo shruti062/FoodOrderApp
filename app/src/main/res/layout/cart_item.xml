@@ -3,41 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp"
-    android:background="@android:color/white">
+    android:padding="10dp">
 
-    <!-- Food Image -->
     <ImageView
         android:id="@+id/cartImage"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_foreground" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"/>
 
-    <!-- Food Details -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_marginStart="10dp">
+        android:paddingStart="10dp">
 
         <TextView
             android:id="@+id/cartName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Food Name"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:text="Name"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/cartPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="₹200"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_green_dark" />
-
+            android:text="₹0.00"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/cartRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove"/>
 </LinearLayout>

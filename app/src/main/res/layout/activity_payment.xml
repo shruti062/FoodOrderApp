@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount to Pay: ₹0.00"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Payment Method"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/black"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupPayment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/radioUpi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UPI (Google Pay / PhonePe / Paytm)"
+                android:padding="10dp"/>
+
+            <RadioButton
+                android:id="@+id/radioCreditCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Credit / Debit Card"
+                android:padding="10dp"/>
+
+            <RadioButton
+                android:id="@+id/radioNetBanking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Net Banking"
+                android:padding="10dp"/>
+
+            <RadioButton
+                android:id="@+id/radioCOD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cash on Delivery"
+                android:padding="10dp"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnPayNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pay Now"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/teal"
+            android:textColor="@color/white"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+</ScrollView>

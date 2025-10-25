@@ -1,7 +1,16 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.FoodOrderApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Custom popup menu for dark mode -->
+    <style name="CustomPopupMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/menu_item_bg</item>
+        <item name="android:textColor">#FFFFFF</item> <!-- White text for dark theme -->
     </style>
+
+    <style name="Base.Theme.FoodOrderApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="popupMenuStyle">@style/CustomPopupMenu</item>
+    </style>
+
+    <style name="Theme.FoodOrderApp" parent="Base.Theme.FoodOrderApp" />
+
 </resources>

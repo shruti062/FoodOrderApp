@@ -1,7 +1,7 @@
 package com.example.foodorderapp
 
-import FoodItem
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +10,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.foodorderapp.FoodItem
 
 class FoodAdapter(
     private val context: Context,
-    private val foodList: List<FoodItem>
+    private val foodList: MutableList<FoodItem>,
+    private val onItemClick: (FoodItem) -> Unit
 ) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
-    class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val foodImage: ImageView = itemView.findViewById(R.id.foodImage)
-        val foodName: TextView = itemView.findViewById(R.id.foodName)
-        val foodPrice: TextView = itemView.findViewById(R.id.foodPrice)
-        val btnAddToCart: Button = itemView.findViewById(R.id.btnAddToCart)
+    inner class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val name = itemView.findViewById<TextView>(R.id.foodName)
+        val desc = itemView.findViewById<TextView>(R.id.foodDescription)
+        val price = itemView.findViewById<TextView>(R.id.foodPrice)
+        val image = itemView.findViewById<ImageView>(R.id.foodImg)
+        val btnAdd = itemView.findViewById<Button>(R.id.btnAddToCart)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
@@ -29,19 +33,27 @@ class FoodAdapter(
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
-        val currentItem = foodList[position]
+        val food = foodList[position]
+        holder.name.text = food.name
+        holder.desc.text = food.description
+        holder.price.text = "₹${food.price}"
+        Glide.with(context).load(food.imageUrl).into(holder.image)
 
-        holder.foodName.text = currentItem.name
-        holder.foodPrice.text = currentItem.price.toString()
+        holder.itemView.setOnClickListener { onItemClick(food) }
+        holder.btnAdd.setOnClickListener { CartManager.addToCart(context, food)
+            Toast.makeText(holder.itemView.context, "${food.name} added to cart", Toast.LENGTH_SHORT).show()
 
-        holder.foodImage.setImageResource(currentItem.imageResId)
-
-        // ✅ Add to Cart button click
-        holder.btnAddToCart.setOnClickListener {
-            CartManager.addToCart(currentItem)
-            Toast.makeText(context, "${currentItem.name} added to cart", Toast.LENGTH_SHORT).show()
-        }
+            // Navigate directly to CartActivity
+            val intent = Intent(holder.itemView.context, CartActivity::class.java)
+            holder.itemView.context.startActivity(intent)}
     }
 
     override fun getItemCount(): Int = foodList.size
+
+    // ✅ Fix for updateList
+    fun updateList(newList: List<FoodItem>) {
+        foodList.clear()
+        foodList.addAll(newList)
+        notifyDataSetChanged()
+    }
 }

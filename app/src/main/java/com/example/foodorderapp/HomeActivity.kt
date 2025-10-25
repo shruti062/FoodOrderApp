@@ -1,81 +1,131 @@
 package com.example.foodorderapp
 
-import FoodItem
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
+import android.widget.Toast
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: FoodAdapter
-    private lateinit var foodList: ArrayList<FoodItem>
+    private val foods = arrayListOf<FoodItem>()
+    private val filteredFoods = arrayListOf<FoodItem>()
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // ✅ Check session first
-        val sessionManager = SessionManager(this)
-        if (!sessionManager.isLoggedIn()) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-            return
-        }
-
-        // ✅ If logged in, load layout
         setContentView(R.layout.activity_home)
 
-        // Setup toolbar
+        CartManager.init(this)
+
         val toolbar: Toolbar = findViewById(R.id.toolbarHome)
         setSupportActionBar(toolbar)
 
-        // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerViewHome)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Create food items
-        foodList = ArrayList()
-        foodList.add(FoodItem("Pizza", "Cheese Burst", 299, R.drawable.pizza))
-        foodList.add(FoodItem("Burger", "Veg Loaded", 149, R.drawable.burger))
-        foodList.add(FoodItem("Pasta", "White Sauce", 199, R.drawable.pasta))
-        foodList.add(FoodItem("Coffee", "Cappuccino", 99, R.drawable.coffee))
+        adapter = FoodAdapter(this, filteredFoods) { selected ->
+            val i = Intent(this, FoodDetailActivity::class.java)
+            i.putExtra("id", selected.id)
+            i.putExtra("name", selected.name)
+            i.putExtra("desc", selected.description)
+            i.putExtra("price", selected.price)
+            i.putExtra("image", selected.imageUrl)
+            startActivity(i)
+        }
 
-        // Set Adapter
-        adapter = FoodAdapter(this, foodList)
         recyclerView.adapter = adapter
+
+        // 🔥 Load food data from Firestore
+        loadFoodItems()
     }
 
-    // Inflate Toolbar Menu
-    override fun onCreateOptionsMenu(menu: android.view.Menu?): Boolean {
+    private fun loadFoodItems() {
+        db.collection("foods")
+            .get()
+            .addOnSuccessListener { result ->
+                foods.clear()
+                for (doc in result) {
+                    val item = doc.toObject(FoodItem::class.java)
+                    foods.add(item)
+                }
+                filteredFoods.clear()
+                filteredFoods.addAll(foods)
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.homemenu, menu)
+
+        val searchItem = menu?.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as? SearchView
+
+        searchView?.queryHint = "Search food..."
+
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                filterList(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterList(newText)
+                return true
+            }
+        })
+
         return true
     }
 
-    // Handle Menu Item Clicks
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_cart -> {
-                startActivity(Intent(this, CartActivity::class.java))
-                return true
-            }
-            R.id.action_orders -> {
-                startActivity(Intent(this, MyOrdersActivity::class.java)) // ✅ OrdersActivity
-                return true
-            }
-            R.id.action_logout -> {
-                val sessionManager = SessionManager(this)
-                sessionManager.logout()
-                finish()
-                return true
-            }
+
+    private fun filterList(query: String?) {
+        filteredFoods.clear()
+        if (query.isNullOrBlank()) {
+            filteredFoods.addAll(foods)
+        } else {
+            val search = query.trim().lowercase()
+            filteredFoods.addAll(
+                foods.filter {
+                    it.name.lowercase().contains(search) ||
+                            it.description.lowercase().contains(search)
+                }
+            )
         }
-        return super.onOptionsItemSelected(item)
+        adapter.notifyDataSetChanged()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_cart -> {
+                startActivity(Intent(this, CartActivity::class.java))
+                true
+            }
+            R.id.action_orders -> {
+                startActivity(Intent(this, MyOrdersActivity::class.java))
+                true
+            }
+            R.id.action_admin -> {
+                startActivity(Intent(this, AdminLoginActivity::class.java))
+                true
+            }
+            R.id.action_logout -> {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }
-

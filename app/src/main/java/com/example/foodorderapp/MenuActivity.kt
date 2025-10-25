@@ -1,36 +1,60 @@
 package com.example.foodorderapp
 
-import FoodItem
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MenuActivity : AppCompatActivity() {
+
+    private lateinit var recyclerViewMenu: RecyclerView
+    private lateinit var btnGoToCart: Button
+    private lateinit var foodAdapter: FoodAdapter
+    private val foodList = mutableListOf<FoodItem>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu)
+        setContentView(R.layout.activity_menu) // ensure layout id
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewMenu)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerViewMenu = findViewById(R.id.recyclerViewMenu)
+        btnGoToCart = findViewById(R.id.btnGoToCart)
 
-        val foodList = listOf(
-            FoodItem("Pizza", "Cheese Burst", 299, R.drawable.pizza),
-            FoodItem("Burger", "Veg Loaded", 149, R.drawable.burger),
-            FoodItem("Pasta", "White Sauce", 199, R.drawable.pasta),
-            FoodItem("Coffee", "Cappuccino", 99, R.drawable.coffee)
-        )
-        val goToCartBtn: Button = findViewById(R.id.btnGoToCart)
-        goToCartBtn.setOnClickListener {
-            val intent = Intent(this, CartActivity::class.java)
+        recyclerViewMenu.layoutManager = LinearLayoutManager(this)
+
+        // adapter: FoodAdapter(foodList, onItemClick)
+        foodAdapter = FoodAdapter(this, foodList) { selected ->
+            val intent = Intent(this, FoodDetailActivity::class.java)
+            intent.putExtra("foodName", selected.name)
+            intent.putExtra("foodDesc", selected.description)
+            intent.putExtra("foodPrice", selected.price)
+            intent.putExtra("foodImage", selected.imageUrl)
             startActivity(intent)
         }
+        recyclerViewMenu.adapter = foodAdapter
 
+        loadFoodFromFirestore()
 
-        val adapter = FoodAdapter(this, foodList)
-        recyclerView.adapter = adapter
+        btnGoToCart.setOnClickListener {
+            startActivity(Intent(this, CartActivity::class.java))
+        }
+    }
 
+    private fun loadFoodFromFirestore() {
+        FirebaseManager.firestore.collection("menuItems")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                foodList.clear()
+                for (doc in snapshot.documents) {
+                    val item = doc.toObject(FoodItem::class.java)
+                    if (item != null) foodList.add(item)
+                }
+                foodAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { e ->
+                Log.e("MenuActivity", "Error loading menuItems", e)
+            }
     }
 }

@@ -1,68 +1,41 @@
 package com.example.foodorderapp
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 
 class CheckoutActivity : AppCompatActivity() {
 
-    @SuppressLint("MissingInflatedId")
+    private lateinit var editAddress: EditText
+    private lateinit var textTotal: TextView
+    private lateinit var btnPlaceOrder: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
 
-        val txtTotal: TextView = findViewById(R.id.txtTotalPriceCheckout)
-        val btnConfirm: Button = findViewById(R.id.btnConfirmOrder)
+        editAddress = findViewById(R.id.editAddress)
+        textTotal = findViewById(R.id.textTotal)
+        btnPlaceOrder = findViewById(R.id.btnPlaceOrder)
 
-        // Get total from CartActivity
-        val total = intent.getIntExtra("TOTAL_PRICE", 0)
-        txtTotal.text = "Total: ₹$total"
+        val total = CartManager.getTotalPrice()
+        textTotal.text = "Total: ₹${"%.2f".format(total)}"
 
-        btnConfirm.setOnClickListener {
-            val cartItems = CartManager.getCartItems()
-
-            if (cartItems.isNotEmpty()) {
-                // Save items to OrderManager
-                OrdersManager.addOrder(cartItems.toList())
-
-
-                // Clear cart after order placed
-                CartManager.clearCart()
-
-                Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show()
-
-                // Navigate to My Orders
-                val intent = Intent(this, MyOrdersActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                Toast.makeText(this, "Cart is empty!", Toast.LENGTH_SHORT).show()
+        btnPlaceOrder.setOnClickListener {
+            val address = editAddress.text.toString().trim()
+            if (address.isEmpty()) {
+                Toast.makeText(this, "Please enter delivery address", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-        }
-        val btnBack: Button = findViewById(R.id.btnBackToHome)
-        btnBack.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            val intent = Intent(this, PaymentActivity::class.java)
+            intent.putExtra("address", address)
+            intent.putExtra("total", total)
             startActivity(intent)
-            finish()
         }
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        toolbar.setNavigationOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            finish()
-        }
-
     }
 }
-
