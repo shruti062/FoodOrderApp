@@ -5,7 +5,7 @@
 
     <!-- Background -->
     <ImageView
-        android:src="@drawable/images"
+        android:src="@drawable/login"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -55,7 +55,7 @@
         <Button
             android:id="@+id/btnSignup"
             android:text="Sign Up"
-            android:backgroundTint="@color/purple"
+            android:backgroundTint="#FF5722"
             android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

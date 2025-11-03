@@ -1,60 +1,79 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@drawable/admin"
+    android:padding="24dp">
 
+    <!-- Transparent overlay for better readability -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000" /> <!-- semi-transparent black overlay -->
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Admin Login"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#333333"
-        android:layout_marginBottom="40dp" />
-
-    <!-- Admin Email -->
-    <EditText
-        android:id="@+id/inputAdminEmail"
+    <!-- Main Card Container -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edittext_bg"
-        android:hint="Enter Admin Email"
-        android:inputType="textEmailAddress"
-        android:drawableStart="@drawable/ic_food"
-        android:drawablePadding="10dp"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:layout_marginBottom="20dp" />
+        android:padding="28dp"
+        android:layout_centerInParent="true"
+        android:elevation="6dp">
+        <!-- Title -->
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin Login"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#FF5722"
+            android:layout_marginBottom="24dp" />
 
-    <!-- Admin Password -->
-    <EditText
-        android:id="@+id/inputAdminPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edittext_bg"
-        android:hint="Enter Password"
-        android:inputType="textPassword"
-        android:drawableStart="@drawable/ic_rupee"
-        android:drawablePadding="10dp"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:layout_marginBottom="28dp" />
+        <!-- Admin Email -->
+        <EditText
+            android:id="@+id/inputAdminEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_bg"
+            android:hint="Enter Admin Email"
+            android:inputType="textEmailAddress"
+            android:drawableStart="@drawable/ic_food"
+            android:drawablePadding="10dp"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="18dp" />
 
-    <!-- Login Button -->
-    <Button
-        android:id="@+id/btnAdminLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login as Admin"
-        android:paddingVertical="12dp"
-        android:backgroundTint="#FF5722"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"/>
-</LinearLayout>
+        <!-- Admin Password -->
+        <EditText
+            android:id="@+id/inputAdminPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_bg"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:drawableStart="@drawable/ic_rupee"
+            android:drawablePadding="10dp"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="26dp" />
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/btnAdminLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login as Admin"
+            android:paddingVertical="12dp"
+            android:backgroundTint="#FF5722"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:elevation="4dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

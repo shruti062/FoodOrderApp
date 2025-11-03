@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Custom popup menu for light mode -->
-    <style name="CustomPopupMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
-        <item name="android:popupBackground">@drawable/menu_item_bg</item>
-        <item name="android:textColor">#000000</item> <!-- Black text for light theme -->
+    <!-- Custom popup menu for LIGHT mode -->
+    <style name="CustomPopupMenu" parent="Widget.Material3.PopupMenu.Overflow">
+        <!-- White background for light mode -->
+        <item name="android:popupBackground">@color/white</item>
+        <!-- Force black text -->
+        <item name="android:textColor">@android:color/black</item>
+        <!-- Fix for Material 3 tint override -->
+        <item name="textAppearancePopupMenuHeader">@style/PopupTextStyle</item>
+    </style>
+
+    <style name="PopupTextStyle" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="Base.Theme.FoodOrderApp" parent="Theme.Material3.DayNight.NoActionBar">

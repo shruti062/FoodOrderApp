@@ -1,5 +1,6 @@
 package com.example.foodorderapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -15,8 +16,17 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
+        // ✅ Check if user already logged in (auto-login)
+        val sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+        val savedEmail = sharedPref.getString("user_email", null)
+        if (savedEmail != null) {
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+            return
+        }
+
+        setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
 
         val edtEmail = findViewById<EditText>(R.id.edtEmail)
@@ -34,6 +44,11 @@ class LoginActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+                            // ✅ Save login session using SharedPreferences
+                            val editor = sharedPref.edit()
+                            editor.putString("user_email", email)
+                            editor.apply()
+
                             Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this, HomeActivity::class.java))
                             finish()

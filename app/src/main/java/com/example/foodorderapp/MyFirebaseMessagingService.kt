@@ -23,7 +23,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val channelId = "food_order_channel"
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE

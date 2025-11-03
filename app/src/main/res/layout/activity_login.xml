@@ -5,10 +5,10 @@
 
     <!-- Background -->
     <ImageView
-        android:src="@drawable/images"
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login" />
 
     <!-- Login Form -->
     <LinearLayout
@@ -46,7 +46,7 @@
         <Button
             android:id="@+id/btnLogin"
             android:text="Login"
-            android:backgroundTint="@color/purple"
+            android:backgroundTint="#FF5722"
             android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Add New Address"
         android:textAllCaps="false"
-        android:backgroundTint="#4CAF50"
+        android:backgroundTint="@color/red"
         android:textColor="#FFFFFF"
         android:layout_marginBottom="10dp"
         android:padding="10dp"

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/images"
+        app:srcCompat="@drawable/admin"
         android:contentDescription="@string/flavorful_spicy_tango" />
 
     <!-- Overlay content -->
@@ -21,30 +21,34 @@
         android:orientation="vertical"
         android:gravity="center"
         android:padding="20dp"
-        android:background="#80000000"> <!-- semi-transparent black overlay for readability -->
+        android:background="#50000000"> <!-- semi-transparent black overlay for readability -->
 
         <!-- Title -->
+
+        <!-- Login Button -->
+
         <TextView
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:fontFamily="@font/fira_sans_bold"
+            android:layout_marginBottom="90dp"
+            android:fontFamily="@font/agbalumo"
             android:text="Welcome to Flavorful Spicy Tango"
-            android:textColor="#FFFFFF"
-            android:textSize="26sp"
             android:textAlignment="center"
+            android:textColor="#EDEDED"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
-        <!-- Login Button -->
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#FF5722"
-            android:text="@string/login"
+            android:backgroundTint="#FF3D00"
+            android:fontFamily="@font/baloo_tamma"
+            android:text="Get Started"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:fontFamily="@font/baloo_tamma" />
+            android:textSize="18sp" />
+
+
     </LinearLayout>
 </FrameLayout>
