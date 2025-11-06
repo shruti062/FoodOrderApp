@@ -23,20 +23,20 @@
 
         android:icon="@drawable/baseline_receipt_long_24"
 
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_admin"
         android:title="Admin Panel"
         android:icon="@drawable/baseline_admin_panel_settings_24"
 
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_logout"
         android:title="Logout"
         android:icon="@drawable/logout"
 
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>
 

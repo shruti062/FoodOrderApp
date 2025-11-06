@@ -1,8 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/imgStatus"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_waiting"
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:id="@+id/txtOrderStatus"
@@ -10,13 +20,27 @@
         android:layout_height="wrap_content"
         android:text="Order Status: Pending"
         android:textSize="18sp"
-        android:paddingBottom="12dp"/>
+        android:textStyle="bold"
+        android:textColor="#333"
+        android:layout_marginBottom="20dp" />
 
     <ProgressBar
         android:id="@+id/progressBarStatus"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="10dp"
+        android:progress="25"
         android:max="100"
-        android:progress="25"/>
+        android:progressTint="#E65100"
+        android:layout_marginBottom="30dp" />
+
+    <!-- 🔄 Animated Loading Spinner -->
+    <ProgressBar
+        android:id="@+id/loadingSpinner"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:visibility="gone"
+        android:indeterminateTint="#E65100" />
+
 </LinearLayout>

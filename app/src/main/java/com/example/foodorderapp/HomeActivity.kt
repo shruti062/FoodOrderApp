@@ -4,13 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import android.widget.Toast
 
 class HomeActivity : AppCompatActivity() {
 
@@ -19,11 +20,13 @@ class HomeActivity : AppCompatActivity() {
     private val foods = arrayListOf<FoodItem>()
     private val filteredFoods = arrayListOf<FoodItem>()
     private val db = FirebaseFirestore.getInstance()
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        auth = FirebaseAuth.getInstance() // ✅ Initialize FirebaseAuth
         CartManager.init(this)
 
         val toolbar: Toolbar = findViewById(R.id.toolbarHome)
@@ -71,7 +74,6 @@ class HomeActivity : AppCompatActivity() {
 
         val searchItem = menu?.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as? SearchView
-
         searchView?.queryHint = "Search food..."
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -88,7 +90,6 @@ class HomeActivity : AppCompatActivity() {
 
         return true
     }
-
 
     private fun filterList(query: String?) {
         filteredFoods.clear()
@@ -121,11 +122,27 @@ class HomeActivity : AppCompatActivity() {
                 true
             }
             R.id.action_logout -> {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                logoutUser()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    // ✅ Logout function (Firebase + SharedPreferences)
+    private fun logoutUser() {
+        // Sign out from Firebase
+        auth.signOut()
+
+        // Clear shared preferences if any
+        val sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE)
+        sharedPref.edit().clear().apply()
+
+        // Navigate to LoginActivity
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+
+        Toast.makeText(this, "Logged out successfully!", Toast.LENGTH_SHORT).show()
     }
 }

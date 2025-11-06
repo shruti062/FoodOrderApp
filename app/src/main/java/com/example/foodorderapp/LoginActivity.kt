@@ -3,10 +3,8 @@ package com.example.foodorderapp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.text.InputType
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -17,7 +15,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ✅ Check if user already logged in (auto-login)
+        // ✅ Auto-login if already logged in
         val sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE)
         val savedEmail = sharedPref.getString("user_email", null)
         if (savedEmail != null) {
@@ -33,7 +31,24 @@ class LoginActivity : AppCompatActivity() {
         val edtPassword = findViewById<EditText>(R.id.edtPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val txtGoSignup = findViewById<TextView>(R.id.txtGoSignup)
+        val imgTogglePassword = findViewById<ImageView>(R.id.imgTogglePassword) // 👁️ Eye icon
 
+        // 👁️ Show / Hide Password Functionality
+        var isPasswordVisible = false
+        imgTogglePassword.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                edtPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                imgTogglePassword.setImageResource(R.drawable.ic_visibility) // 👁️
+            } else {
+                edtPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                imgTogglePassword.setImageResource(R.drawable.ic_visibility_off) // 🚫👁️
+            }
+            edtPassword.setSelection(edtPassword.text.length)
+        }
+
+        // 🔐 Login Button
         btnLogin.setOnClickListener {
             val email = edtEmail.text.toString().trim()
             val password = edtPassword.text.toString().trim()
@@ -44,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            // ✅ Save login session using SharedPreferences
+                            // ✅ Save login session
                             val editor = sharedPref.edit()
                             editor.putString("user_email", email)
                             editor.apply()
@@ -59,6 +74,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        // 🔄 Navigate to Signup Page
         txtGoSignup.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }

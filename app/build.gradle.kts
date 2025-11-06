@@ -50,6 +50,8 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation ("com.google.firebase:firebase-storage:21.0.0")
+
 
     // 🔹 Google Play Services
     implementation("com.google.android.gms:play-services-base:18.3.0")
@@ -59,6 +61,8 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("androidx.recyclerview:recyclerview:1.3.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation ("com.airbnb.android:lottie:6.1.0")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

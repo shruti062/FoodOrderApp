@@ -23,6 +23,16 @@
         android:elevation="6dp"
         android:gravity="center">
 
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#F44336"
+            android:layout_marginBottom="24dp" />
+
         <EditText
             android:id="@+id/edtName"
             android:hint="Full Name"
@@ -42,20 +52,41 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"/>
 
-        <EditText
-            android:id="@+id/edtPassword"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:background="@android:drawable/edit_text"
-            android:padding="12dp"
+        <!-- Password Field with Eye Icon -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@android:drawable/edit_text"
+            android:padding="4dp"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:background="@android:color/transparent" />
+
+            <ImageView
+                android:id="@+id/btnTogglePassword"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_visibility_off"
+                android:padding="6dp"
+                android:contentDescription="Toggle Password Visibility"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnSignup"
             android:text="Sign Up"
-            android:backgroundTint="#FF5722"
+            android:backgroundTint="#E34A1A"
             android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
